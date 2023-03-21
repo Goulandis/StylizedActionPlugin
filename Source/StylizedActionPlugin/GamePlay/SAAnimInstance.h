@@ -16,12 +16,21 @@ class STYLIZEDACTIONPLUGIN_API USAAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="SAAnimInstance")
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stylized Action")
 	FSAFrameData FrameData;
-	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="SAAnimInstance")
-	USACurvesDataAsset* Curves;
+	UPROPERTY(BlueprintReadWrite,EditAnywhere,Category="Stylized Action")
+	USACurvesDataAsset* CurvesAsset;
+private:
+	int32 CurvesAssetKeyMaxIndex;
 public:
-	int32 GetMaxFrameIndex();
+	UFUNCTION()
+	void OnCurvesChanged();
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="Stylized Action")
+	USACurvesDataAsset* GetSACurvesAsset();
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="Stylized Action")
+	int32 GetFrameMaxIndex();
+	UFUNCTION(BlueprintCallable,Category="Stylized Action")
 	FSAFrameData GetSingleFrameData(int32 Index);
+	UFUNCTION(BlueprintCallable,Category="Stylized Action")
 	FTransform GetFrameDataFromCurve(int32 Index,USACurvesDataAsset* CurveAsset);
 };
