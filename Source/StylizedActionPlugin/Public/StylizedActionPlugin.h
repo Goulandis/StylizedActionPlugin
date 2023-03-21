@@ -21,7 +21,7 @@ public:
 	void RegistEditorUtilityWidget();
 
 	static EAssetTypeCategories::Type GetAssetCategory(){return CurvesDataAssetCategory;}
-	TSharedRef<FSACurvesDataAssetEditorToolkit> CreateSaCurvesDataAssetEditor(const EToolkitMode::Type Mode,const TSharedPtr<IToolkitHost>& InitToolkitHost,UObject* SACurvesDataAsset);
+	TSharedRef<FSACurvesDataAssetEditorToolkit> CreateSACurvesDataAssetEditor(const EToolkitMode::Type Mode,const TSharedPtr<IToolkitHost>& InitToolkitHost,UObject* SACurvesDataAsset);
 private:
 	void RegisterMenus();
 

@@ -50,7 +50,8 @@ public class StylizedActionPlugin : ModuleRules
 				"RHI",
 				"EditorScriptingUtilities", 
 				"Blutility",
-				"UMGEditor"
+				"UMGEditor",
+				"ControlRig"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

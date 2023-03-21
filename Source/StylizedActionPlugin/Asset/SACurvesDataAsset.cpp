@@ -3,11 +3,14 @@
 
 #include "SACurvesDataAsset.h"
 
+DEFINE_LOG_CATEGORY(SALog);
+
 USACurvesDataAsset::USACurvesDataAsset(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
 {
 	auto Curve = ScaleCurve.GetRichCurve();
 	Curve->AddKey(0.f,0.f);
 	Curve->AddKey(1.f,1.f);
+	InitCurves();
 }
 
 void USACurvesDataAsset::BeginDestroy()
@@ -52,4 +55,16 @@ void USACurvesDataAsset::AssetModify()
 {
 	Modify();
 	PostEditCallback.ExecuteIfBound();
+}
+
+void USACurvesDataAsset::InitCurves()
+{
+	FSAFrameData* FrameData = new FSAFrameData();
+	//遍历FSAFrameData结构体，动态初始化风格化曲线资产
+	for (TFieldIterator<FProperty> PropIt(FrameData->StaticStruct()); PropIt; ++PropIt)
+	{
+		FProperty* Property = *PropIt;
+		FCurvesItem Item;
+		Curves.Add(FName(*Property->GetName()),Item);
+	}
 }

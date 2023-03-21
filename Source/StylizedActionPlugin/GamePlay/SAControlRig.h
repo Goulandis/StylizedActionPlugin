@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/GameInstance.h"
-#include "SAGameInstance.generated.h"
+#include "ControlRig.h"
+#include "SAControlRig.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class STYLIZEDACTIONPLUGIN_API USAGameInstance : public UGameInstance
+UCLASS(BlueprintType)
+class STYLIZEDACTIONPLUGIN_API USAControlRig : public UControlRig
 {
 	GENERATED_BODY()
+	
 };

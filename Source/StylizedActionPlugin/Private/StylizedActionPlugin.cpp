@@ -107,7 +107,7 @@ void FStylizedActionPluginModule::RegistEditorUtilityWidget()
 }
 
 
-TSharedRef<FSACurvesDataAssetEditorToolkit> FStylizedActionPluginModule::CreateSaCurvesDataAssetEditor(
+TSharedRef<FSACurvesDataAssetEditorToolkit> FStylizedActionPluginModule::CreateSACurvesDataAssetEditor(
 	const EToolkitMode::Type Mode, const TSharedPtr<IToolkitHost>& InitToolkitHost, UObject* SACurvesDataAsset)
 {
 	TSharedRef<FSACurvesDataAssetEditorToolkit> NewSACurvesDataAssetEditor(new FSACurvesDataAssetEditorToolkit());

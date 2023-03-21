@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "SAData.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "SACurvesDataAsset.generated.h"
@@ -16,14 +16,12 @@ struct FViewportObject
 	FViewportObject(TObjectPtr<UStaticMeshComponent> Component,FTransform Transform):Component(Component),Transform(Transform){}
 };
 
-UCLASS(BlueprintType,NotBlueprintable,AutoExpandCategories="风格化动作曲线")
+UCLASS(BlueprintType,Blueprintable,AutoExpandCategories="风格化动作曲线")
 class STYLIZEDACTIONPLUGIN_API USACurvesDataAsset : public UObject
 {
 	GENERATED_UCLASS_BODY()
 	DECLARE_DELEGATE(FPostEditCallback)
 public:
-	
-	
 	virtual void BeginDestroy() override;
 
 #if WITH_EDITOR
@@ -36,6 +34,7 @@ public:
 #endif
 	
 	void AssetModify();
+	void InitCurves();
 public:
 	UPROPERTY(EditAnywhere,Category="SACurvesDataAsset",meta=(Subcategory="Growth",XAxisName="Normalized Age",YAxisName="Scale Factor"))
 	FRuntimeFloatCurve ScaleCurve;
@@ -43,6 +42,9 @@ public:
 	TObjectPtr<UStaticMesh> Mesh;
 	UPROPERTY(EditAnywhere,Category="SACurvesDataAsset",meta=(Subcategory="Growth"))
 	uint32 Num;
+	
+	UPROPERTY(EditAnywhere,Category="SACurvesDataAsset",meta=(Subcategory="Growth",XAxisName="Normalized Age",YAxisName="Scale Factor"))
+	TMap<FName,FCurvesItem> Curves;
 	
 	FPostEditCallback PostEditCallback;
 	TArray<FViewportObject> ViewportComponents;

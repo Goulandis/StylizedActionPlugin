@@ -136,8 +136,6 @@ void FSACurvesDataAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabM
 	.SetDisplayName(LOCTEXT("PropertiesTab","Details"))
 	.SetGroup(WorkspaceMenuCategortRef)
 	.SetIcon(FSlateIcon(FAppStyle::Get().GetStyleSetName(),"LevelEditor.Tabs.Details"));
-
-	UE_LOG(LogTemp,Error,TEXT("FSACurvesDataAssetEditorToolkit::RegisterTabSpawners"));
 }
 
 void FSACurvesDataAssetEditorToolkit::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
