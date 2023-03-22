@@ -42,7 +42,9 @@ public:
 	TObjectPtr<UStaticMesh> Mesh;
 	UPROPERTY(EditAnywhere,Category="SACurvesDataAsset",meta=(Subcategory="Growth"))
 	uint32 Num;
-	
+
+	UPROPERTY(EditAnywhere,Category="SACurvesDataAsset",meta=(Subcategory="Growth"))
+	UDebugSkelMeshComponent* PreviewMeshComponent;
 	UPROPERTY(EditAnywhere,Category="SACurvesDataAsset",meta=(Subcategory="Growth",XAxisName="Normalized Age",YAxisName="Scale Factor"))
 	TMap<FName,FCurvesItem> Curves;
 	

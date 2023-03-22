@@ -65,6 +65,9 @@ void USACurvesDataAsset::InitCurves()
 	{
 		FProperty* Property = *PropIt;
 		FCurvesItem Item;
+		Item.Scale.X.GetRichCurve()->AddKey(0.0f,1.0f);
+		Item.Scale.Y.GetRichCurve()->AddKey(0.0f,1.0f);
+		Item.Scale.Z.GetRichCurve()->AddKey(0.0f,1.0f);
 		Curves.Add(FName(*Property->GetName()),Item);
 	}
 }

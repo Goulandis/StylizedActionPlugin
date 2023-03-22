@@ -6,6 +6,7 @@
 #include "Misc/NotifyHook.h"
 #include "SACurvesDataAsset.h"
 #include "SSACurvesDataAssetEditorViewport.h"
+#include "SSkeletonWidget.h"
 
 class STYLIZEDACTIONPLUGIN_API FSACurvesDataAssetEditorToolkit : public FAssetEditorToolkit,public FNotifyHook,public FGCObject
 {
@@ -31,6 +32,7 @@ private:
 
 	TSharedRef<SDockTab> SpawnTabViewport(const FSpawnTabArgs& Args);
 	TSharedRef<SDockTab> SpawnTabProperties(const FSpawnTabArgs& Args);
+	//TSharedRef<SDockTab> SpawnTabAnimation(const FSpawnTabArgs& Args);
 
 	void OnPreopertyChanged(const FPropertyChangedEvent& InEvent);
 
@@ -42,5 +44,8 @@ private:
 
 	TSharedPtr<FEditorViewportTabContent> SACurvesDatasAssetViewportTabContent;
 	TSharedPtr<IDetailsView> SACurvesDataAssetDetailsView;
+
+	//TSharedPtr<SSkeletonWidget> SASkeletionWidget;
+	
 	TSharedPtr<SSACurvesDataAssetEditorViewport> SACurvesDataAssetViewport;
 };

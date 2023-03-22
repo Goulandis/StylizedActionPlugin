@@ -2,6 +2,7 @@
 
 #include "FStylizedActionPluginCommands.h"
 #include "FStylizedActionPluginStyle.h"
+#include "SSkeletonWidget.h"
 #include "Styling/SlateStyleRegistry.h"
 
 #define LOCTEXT_NAMESPACE "SACurvesDataEditorToolkit"
@@ -127,6 +128,11 @@ void FSACurvesDataAssetEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabM
 	TSharedRef<FWorkspaceItem> WorkspaceMenuCategortRef = WorkspaceMenuCategory.ToSharedRef();
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 
+	// InTabManager->RegisterTabSpawner(PropertiesTabId,FOnSpawnTab::CreateSP(this,&FSACurvesDataAssetEditorToolkit::SpawnTabAnimation))
+	// .SetDisplayName(LOCTEXT("ViewportTab","Animation"))
+	// .SetGroup(WorkspaceMenuCategortRef)
+	// .SetIcon(FSlateIcon(FAppStyle::Get().GetStyleSetName(),"LevelEditor.Tabs.Viewports"));
+
 	InTabManager->RegisterTabSpawner(ViewportTabId,FOnSpawnTab::CreateSP(this,&FSACurvesDataAssetEditorToolkit::SpawnTabViewport))
 	.SetDisplayName(LOCTEXT("ViewportTab","Viewport"))
 	.SetGroup(WorkspaceMenuCategortRef)
@@ -171,6 +177,20 @@ TSharedRef<SDockTab> FSACurvesDataAssetEditorToolkit::SpawnTabProperties(const F
 
 	return SNew(SDockTab).Label(LOCTEXT("SACurvesDataAssetEditorPropertiesTabTitle","Details"))[SACurvesDataAssetDetailsView.ToSharedRef()];
 }
+
+// TSharedRef<SDockTab> FSACurvesDataAssetEditorToolkit::SpawnTabAnimation(const FSpawnTabArgs& Args)
+// {
+// 	TSharedRef<SDockTab> DockableTab = SNew(SDockTab);
+// 	SACurvesDatasAssetViewportTabContent = MakeShareable(new FEditorViewportTabContent());
+// 	const FString LayoutId = FString("SACurvesDataAssetEditorViewport");
+// 	SACurvesDatasAssetViewportTabContent->Initialize([this](const FAssetEditorViewportConstructionArgs& InConstructionArgs)
+// 	{
+// 		return SACurvesDataAssetViewport.ToSharedRef();
+// 	},DockableTab,LayoutId);
+// 	FPreviewScene scene;
+// 	SAssignNew(SACurvesDataAssetViewport,FEditorViewportTabContent,scene);
+// 	return DockableTab;
+// }
 
 void FSACurvesDataAssetEditorToolkit::OnPreopertyChanged(const FPropertyChangedEvent& InEvent)
 {

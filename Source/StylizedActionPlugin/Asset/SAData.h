@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "Kismet/KismetMathLibrary.h"
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "SAData.generated.h"
@@ -62,6 +62,71 @@ struct FSAFrameData
 	FTransform foot_r;
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	FTransform ball_r;
+
+	bool TransformEqual(const FTransform& Source,const FTransform& Target)
+	{
+		if(Source.GetLocation() == Target.GetLocation() && Source.GetRotation() == Target.GetRotation() && Source.GetScale3D() == Target.GetScale3D())
+		{return true;}
+		else{return false;}
+	}
+	
+	bool operator==(const FSAFrameData& Target)
+	{
+		return TransformEqual(this->pelvis,Target.pelvis)
+			&& TransformEqual(this->spine_01,Target.spine_01)
+			&& TransformEqual(this->spine_02,Target.spine_02)
+			&& TransformEqual(this->spine_03,Target.spine_03)
+			&& TransformEqual(this->spine_04,Target.spine_04)
+			&& TransformEqual(this->spine_05,Target.spine_05)
+			&& TransformEqual(this->clavicle_l,Target.clavicle_l)
+			&& TransformEqual(this->upperarm_l,Target.upperarm_l)
+			&& TransformEqual(this->lowerarm_l,Target.lowerarm_l)
+			&& TransformEqual(this->hand_l,Target.hand_l)
+			&& TransformEqual(this->clavicle_r,Target.clavicle_r)
+			&& TransformEqual(this->upperarm_r,Target.upperarm_r)
+			&& TransformEqual(this->lowerarm_r,Target.lowerarm_r)
+			&& TransformEqual(this->hand_r,Target.hand_r)
+			&& TransformEqual(this->neck_01,Target.neck_01)
+			&& TransformEqual(this->neck_02,Target.neck_02)
+			&& TransformEqual(this->head,Target.head)
+			&& TransformEqual(this->thigh_l,Target.thigh_l)
+			&& TransformEqual(this->calf_l,Target.calf_l)
+			&& TransformEqual(this->foot_l,Target.foot_l)
+			&& TransformEqual(this->ball_l,Target.ball_l)
+			&& TransformEqual(this->thigh_r,Target.thigh_r)
+			&& TransformEqual(this->calf_r,Target.calf_r)
+			&& TransformEqual(this->foot_r,Target.foot_r)
+			&& TransformEqual(this->ball_r,Target.ball_r);
+	}
+
+	void FrameDataInterpTo(FSAFrameData& Start,float DeltaSeconds,float InterpSpeed=5.0f)
+	{
+		Start.pelvis = UKismetMathLibrary::TInterpTo(Start.pelvis,this->pelvis,DeltaSeconds,InterpSpeed);
+		Start.spine_01 = UKismetMathLibrary::TInterpTo(Start.spine_01,this->spine_01,DeltaSeconds,InterpSpeed);
+		Start.spine_02 = UKismetMathLibrary::TInterpTo(Start.spine_02,this->spine_02,DeltaSeconds,InterpSpeed);
+		Start.spine_03 = UKismetMathLibrary::TInterpTo(Start.spine_03,this->spine_03,DeltaSeconds,InterpSpeed);
+		Start.spine_04 = UKismetMathLibrary::TInterpTo(Start.spine_04,this->spine_04,DeltaSeconds,InterpSpeed);
+		Start.spine_05 = UKismetMathLibrary::TInterpTo(Start.spine_05,this->spine_05,DeltaSeconds,InterpSpeed);
+		Start.clavicle_l = UKismetMathLibrary::TInterpTo(Start.clavicle_l,this->clavicle_l,DeltaSeconds,InterpSpeed);
+		Start.upperarm_l = UKismetMathLibrary::TInterpTo(Start.upperarm_l,this->upperarm_l,DeltaSeconds,InterpSpeed);
+		Start.lowerarm_l = UKismetMathLibrary::TInterpTo(Start.lowerarm_l,this->lowerarm_l,DeltaSeconds,InterpSpeed);
+		Start.hand_l = UKismetMathLibrary::TInterpTo(Start.hand_l,this->hand_l,DeltaSeconds,InterpSpeed);
+		Start.clavicle_r = UKismetMathLibrary::TInterpTo(Start.clavicle_r,this->clavicle_r,DeltaSeconds,InterpSpeed);
+		Start.upperarm_r = UKismetMathLibrary::TInterpTo(Start.upperarm_r,this->upperarm_r,DeltaSeconds,InterpSpeed);
+		Start.lowerarm_r = UKismetMathLibrary::TInterpTo(Start.lowerarm_r,this->lowerarm_r,DeltaSeconds,InterpSpeed);
+		Start.hand_r = UKismetMathLibrary::TInterpTo(Start.hand_r,this->hand_r,DeltaSeconds,InterpSpeed);
+		Start.neck_01 = UKismetMathLibrary::TInterpTo(Start.neck_01,this->neck_01,DeltaSeconds,InterpSpeed);
+		Start.neck_02 = UKismetMathLibrary::TInterpTo(Start.neck_02,this->neck_02,DeltaSeconds,InterpSpeed);
+		Start.head = UKismetMathLibrary::TInterpTo(Start.head,this->head,DeltaSeconds,InterpSpeed);
+		Start.thigh_l = UKismetMathLibrary::TInterpTo(Start.thigh_l,this->thigh_l,DeltaSeconds,InterpSpeed);
+		Start.calf_l = UKismetMathLibrary::TInterpTo(Start.calf_l,this->calf_l,DeltaSeconds,InterpSpeed);
+		Start.foot_l = UKismetMathLibrary::TInterpTo(Start.foot_l,this->foot_l,DeltaSeconds,InterpSpeed);
+		Start.ball_l = UKismetMathLibrary::TInterpTo(Start.ball_l,this->ball_l,DeltaSeconds,InterpSpeed);
+		Start.thigh_r = UKismetMathLibrary::TInterpTo(Start.thigh_r,this->thigh_r,DeltaSeconds,InterpSpeed);
+		Start.calf_r = UKismetMathLibrary::TInterpTo(Start.calf_r,this->calf_r,DeltaSeconds,InterpSpeed);
+		Start.foot_r = UKismetMathLibrary::TInterpTo(Start.foot_r,this->foot_r,DeltaSeconds,InterpSpeed);
+		Start.ball_r = UKismetMathLibrary::TInterpTo(Start.ball_r,this->ball_r,DeltaSeconds,InterpSpeed);
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -202,6 +267,24 @@ struct FCurvesItem
 		TransformTemp.SetScale3D(Scale.GetSingleFrameData(Index));
 		return TransformTemp;
 	}
+};
+
+UENUM(BlueprintType)
+enum class ESAType : uint8
+{
+	Defualt,
+	Restore,
+	InterpTo
+};
+
+UENUM(BlueprintType)
+enum class EPawnState : uint8
+{
+	Defualt,
+	Idle,
+	Walk,
+	Run,
+	Jump
 };
 
 UCLASS()
