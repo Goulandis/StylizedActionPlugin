@@ -51,7 +51,9 @@ public class StylizedActionPlugin : ModuleRules
 				"EditorScriptingUtilities", 
 				"Blutility",
 				"UMGEditor",
-				"ControlRig"
+				"ControlRig",
+				"Persona", 
+				"PinnedCommandList"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

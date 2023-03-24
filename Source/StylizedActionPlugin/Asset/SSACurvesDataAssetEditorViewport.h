@@ -18,6 +18,7 @@ public:
 	SLATE_ARGUMENT(TWeakPtr<FSACurvesDataAssetEditorToolkit>,SACurvesDataAssetEditorToolkit)
 	SLATE_END_ARGS()
 public:
+	virtual ~SSACurvesDataAssetEditorViewport() override;
 	void Construct(const FArguments& InArgs);
 	void UpdateViewport(TSharedPtr<FSACurvesDataAssetEditorToolkit> SACurvesDataAssetEditorToolkit);
 	void GenerateSphere(USACurvesDataAsset* SACurvesDataAsset);
@@ -36,6 +37,7 @@ private:
 	TSharedPtr<FAdvancedPreviewScene> PreviewScene;
 	TSharedPtr<FEditorViewportClient> EditorViewportClient;
 	TWeakPtr<FSACurvesDataAssetEditorToolkit> SACurvesDataAssetEditorToolkitPtr;
+	TSharedPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 };
 
 class FSAAssetEditorViewportClient : public FEditorViewportClient

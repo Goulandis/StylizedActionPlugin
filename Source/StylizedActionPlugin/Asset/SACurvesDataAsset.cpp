@@ -3,6 +3,8 @@
 
 #include "SACurvesDataAsset.h"
 
+#include "UObject/ConstructorHelpers.h"
+
 DEFINE_LOG_CATEGORY(SALog);
 
 USACurvesDataAsset::USACurvesDataAsset(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
@@ -11,6 +13,7 @@ USACurvesDataAsset::USACurvesDataAsset(const FObjectInitializer& ObjectInitializ
 	Curve->AddKey(0.f,0.f);
 	Curve->AddKey(1.f,1.f);
 	InitCurves();
+	InitSkeletalMesh();
 }
 
 void USACurvesDataAsset::BeginDestroy()
@@ -49,6 +52,30 @@ void USACurvesDataAsset::PostEditChangeProperty(FPropertyChangedEvent& PropertyC
 	AssetModify();
 }
 
+void USACurvesDataAsset::SetPreviewMesh(USkeletalMesh* PreviewMesh, bool bMarkAsDirty)
+{
+#if WITH_EDITORONLY_DATA
+	if(bMarkAsDirty)
+	{
+		Modify();
+	}
+	PreSkeletalMesh = PreviewMesh;
+#endif
+}
+
+USkeletalMesh* USACurvesDataAsset::GetPreviewMesh() const
+{
+#if WITH_EDITORONLY_DATA
+	if (!PreSkeletalMesh.IsValid())
+	{
+		PreSkeletalMesh.LoadSynchronous();
+	}
+	return PreSkeletalMesh.Get();
+#else
+	return nullptr;
+#endif
+}
+
 #endif
 
 void USACurvesDataAsset::AssetModify()
@@ -70,4 +97,11 @@ void USACurvesDataAsset::InitCurves()
 		Item.Scale.Z.GetRichCurve()->AddKey(0.0f,1.0f);
 		Curves.Add(FName(*Property->GetName()),Item);
 	}
+}
+
+void USACurvesDataAsset::InitSkeletalMesh()
+{
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> SkeletalMesh(TEXT("SkeletalMesh'/StylizedActionPlugin/ControlRig/SKM_SA.SKM_SA'"));
+	PreSkeletalMesh = SkeletalMesh.Object;
+	PreSkeletalTransform.SetScale3D(FVector(10,10,10));
 }

@@ -17,4 +17,22 @@ public:
 
 public:
 	TSharedPtr< FUICommandInfo > PluginAction;
+
+	/** Hide all bones */
+	TSharedPtr< FUICommandInfo > ShowBoneDrawNone;
+
+	/** Show only selected bones */
+	TSharedPtr< FUICommandInfo > ShowBoneDrawSelected;
+
+	/** Show only selected bones and their parents */
+	TSharedPtr< FUICommandInfo > ShowBoneDrawSelectedAndParents;
+
+	/** Show only selected bones and their children */
+	TSharedPtr< FUICommandInfo > ShowBoneDrawSelectedAndChildren;
+
+	/** Show only selected bones and their parents and children */
+	TSharedPtr< FUICommandInfo > ShowBoneDrawSelectedAndParentsAndChildren;
+
+	/** Show all bones */
+	TSharedPtr< FUICommandInfo > ShowBoneDrawAll;
 };

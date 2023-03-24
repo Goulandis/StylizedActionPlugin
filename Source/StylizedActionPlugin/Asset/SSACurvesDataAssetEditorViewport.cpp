@@ -11,6 +11,12 @@
 #include "SCommonEditorViewportToolbarBase.h"
 #include "SEditorViewport.h"
 #include "AssetViewerSettings.h"
+#include "SSAEditorViewportToolbar.h"
+#include "Persona/Private/SAnimViewportToolBar.h"
+
+SSACurvesDataAssetEditorViewport::~SSACurvesDataAssetEditorViewport()
+{
+}
 
 void SSACurvesDataAssetEditorViewport::Construct(const FArguments& InArgs)
 {
@@ -25,7 +31,7 @@ void SSACurvesDataAssetEditorViewport::Construct(const FArguments& InArgs)
 
 void SSACurvesDataAssetEditorViewport::UpdateViewport(TSharedPtr<FSACurvesDataAssetEditorToolkit> SACurvesDataAssetEditorToolkit)
 {
-	if(EditorViewportClient.IsValid()&&PreviewScene.IsValid())
+	if(EditorViewportClient.IsValid() && PreviewScene.IsValid())
 	{
 		UAssetViewerSettings* Setting = UAssetViewerSettings::Get();
 		const int32 ProfilesIndex = PreviewScene->GetCurrentProfileIndex();
@@ -47,22 +53,30 @@ void SSACurvesDataAssetEditorViewport::GenerateSphere(USACurvesDataAsset* SACurv
 	{
 		PreviewScene->RemoveComponent(Ele.Component);
 	}
-	SACurvesDataAsset->ViewportComponents.Empty();
-	FRichCurve* Curve = SACurvesDataAsset->ScaleCurve.GetRichCurve();
-	if(SACurvesDataAsset->Mesh)
+	// SACurvesDataAsset->ViewportComponents.Empty();
+	// FRichCurve* Curve = SACurvesDataAsset->ScaleCurve.GetRichCurve();
+	// if(SACurvesDataAsset->Mesh)
+	// {
+	// 	for(uint32 i=0;i<SACurvesDataAsset->Num;++i)
+	// 	{
+	// 		UStaticMeshComponent* Component = NewObject<UStaticMeshComponent>(GetTransientPackage(),NAME_None,EObjectFlags::RF_Transient);
+	// 		Component->SetMobility(EComponentMobility::Static);
+	// 		FComponentReregisterContext ReregisterContext(Component);
+	// 		Component->SetStaticMesh(SACurvesDataAsset->Mesh);
+	// 		FTransform Transform;
+	// 		Transform.SetLocation(FVector(0,i*100,i*100*Curve->Eval(i*1.0/SACurvesDataAsset->Num)));
+	// 		PreviewScene->AddComponent(Component,Transform);
+	// 		SACurvesDataAsset->ViewportComponents.Add(FViewportObject(Component,Transform));
+	// 	}
+	// }
+	if(SkeletalMeshComponent == nullptr)
 	{
-		for(uint32 i=0;i<SACurvesDataAsset->Num;++i)
-		{
-			UStaticMeshComponent* Component = NewObject<UStaticMeshComponent>(GetTransientPackage(),NAME_None,EObjectFlags::RF_Transient);
-			Component->SetMobility(EComponentMobility::Static);
-			FComponentReregisterContext ReregisterContext(Component);
-			Component->SetStaticMesh(SACurvesDataAsset->Mesh);
-			FTransform Transform;
-			Transform.SetLocation(FVector(0,i*100,i*100*Curve->Eval(i*1.0/SACurvesDataAsset->Num)));
-			PreviewScene->AddComponent(Component,Transform);
-			SACurvesDataAsset->ViewportComponents.Add(FViewportObject(Component,Transform));
-		}
+		SkeletalMeshComponent = MakeShareable(NewObject<USkeletalMeshComponent>(GetTransientPackage(),NAME_None,EObjectFlags::RF_Transient));
 	}
+	SkeletalMeshComponent->SetMobility(EComponentMobility::Static);
+	PreviewScene->AddComponent(SkeletalMeshComponent.Get(),SACurvesDataAsset->PreSkeletalTransform);
+	SkeletalMeshComponent->SetSkeletalMesh(SACurvesDataAsset->GetPreviewMesh());
+	FComponentReregisterContext ReregisterSkeletalMeshContext(SkeletalMeshComponent.Get());
 }
 
 TSharedRef<SEditorViewport> SSACurvesDataAssetEditorViewport::GetViewportWidget()
@@ -93,7 +107,8 @@ TSharedRef<FEditorViewportClient> SSACurvesDataAssetEditorViewport::MakeEditorVi
 
 TSharedPtr<SWidget> SSACurvesDataAssetEditorViewport::MakeViewportToolbar()
 {
-	return SNew(SCommonEditorViewportToolbarBase,SharedThis(this));
+	//return SNew(SCommonEditorViewportToolbarBase,SharedThis(this));
+	return SNew(SSAEditorViewportToolbar);
 }
 
 FSAAssetEditorViewportClient::FSAAssetEditorViewportClient(FPreviewScene* InPreviewScene,const TWeakPtr<SEditorViewport>& InEditorViewportWidget)
